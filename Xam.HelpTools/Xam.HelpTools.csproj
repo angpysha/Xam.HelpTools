@@ -10,7 +10,7 @@
 		<PackageId>Xam.HelpTools</PackageId>
 		<Authors>Andrii Petrovskyi</Authors>
 		<PackageProjectUrl>https://github.com/angpysha/Xam.HelpTools</PackageProjectUrl>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<!--<PackageLicenseFile>LICENSE</PackageLicenseFile>-->
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
 		<IncludeSymbols>True</IncludeSymbols>
