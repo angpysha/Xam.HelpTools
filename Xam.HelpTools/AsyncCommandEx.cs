@@ -18,30 +18,36 @@ namespace Xam.HelpTools
 
     public class AsyncCommandEx<TViewModelType> : AsyncCommandEx<object, TViewModelType> where TViewModelType : class
     {
-        public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext = true) : base(action,continueOnTheSameContext)
+        public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
         }
 
-        public AsyncCommandEx(Func<object, Task> action, bool continueOnTheSameContext = true) : base(action,continueOnTheSameContext)
+        public AsyncCommandEx(Func<object, Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
         }
 
-        public AsyncCommandEx(Func<object, Task> action, Expression canExecuteExpression, WeakReference<TViewModelType> target,
-            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : 
-            base(action, canExecuteExpression, target, continueInTheSameContext, allowMultipleExecutions)
+        public AsyncCommandEx(Func<object, Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression,
+            WeakReference<TViewModelType> target,
+            Action<Exception> onException = null,
+            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action,
+            canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
         {
+
         }
 
-        public AsyncCommandEx(Func<Task> action, Expression canExecuteExpression, WeakReference<TViewModelType> target,
-            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : 
-            base(action, canExecuteExpression, target,continueInTheSameContext,allowMultipleExecutions)
+        public AsyncCommandEx(Func<Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression,
+            WeakReference<TViewModelType> target,
+            Action<Exception> onException = null,
+            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action,
+            canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
         {
+
         }
     }
 
     public class AsyncCommandEx<TParameterType, TViewModelType> : ICommand where TViewModelType : class
     {
-        private readonly Expression _canExecute;
+        private readonly Expression<Func<TViewModelType, bool>> _canExecute;
         private bool _expressionValue;
         private readonly WeakReference<TViewModelType> _target;
         private WeakEventManager _weakEventManager = new WeakEventManager();
@@ -49,6 +55,7 @@ namespace Xam.HelpTools
         private bool _continueOnTheSameContext = true;
         private Func<TViewModelType, bool> _getValueFunc;
         private bool _allowMultipleExecutions;
+        private Action<Exception> _onException;
 
         private readonly Func<TParameterType, Task> execute;
 
@@ -60,13 +67,25 @@ namespace Xam.HelpTools
             get => _executionCount;
             set
             {
+                var shouldRaiseCanExecuteChanged = (_allowMultipleExecutions, _executionCount, value) switch
+                {
+                    (true, _, _) => false,
+                    (false, 0, > 0) => true,
+                    (false, > 0, 0) => true,
+                    (false, _, _) => false
+                };
 
                 _executionCount = value;
+
+                if (shouldRaiseCanExecuteChanged)
+                    _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged));
             }
         }
 
 
-        public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext) : this((d) => action(),continueOnTheSameContext)
+        public bool IsExecuting => ExecutionCount > 0;
+
+        public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext) : this((d) => action(), continueOnTheSameContext)
         {
 
         }
@@ -77,7 +96,8 @@ namespace Xam.HelpTools
             _continueOnTheSameContext = continueOnTheSameContext;
         }
 
-        public AsyncCommandEx(Func<TParameterType, Task> action, Expression canExecuteExpression, WeakReference<TViewModelType> target,
+        public AsyncCommandEx(Func<TParameterType, Task> action, Expression<Func<TViewModelType,bool>> canExecuteExpression, WeakReference<TViewModelType> target,
+            Action<Exception> onException = null,
             bool continueInTheSameContext = true, bool allowMultipleExecutions = true)
         {
             execute = action;
@@ -85,16 +105,30 @@ namespace Xam.HelpTools
             _target = target;
             _continueOnTheSameContext = continueInTheSameContext;
             _allowMultipleExecutions = allowMultipleExecutions;
+            _onException = onException;
         }
 
-        public AsyncCommandEx(Func<Task> action, Expression canExecuteExpression, WeakReference<TViewModelType> target,
+        public AsyncCommandEx(Func<Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression, WeakReference<TViewModelType> target,
+            Action<Exception> onException = null,
             bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : this(
-            (d) => action(), canExecuteExpression, target, continueInTheSameContext,allowMultipleExecutions)
+            (d) => action(), canExecuteExpression, target, onException,continueInTheSameContext, allowMultipleExecutions)
         {
 
         }
 
         public bool CanExecute(object parameter)
+        {
+
+            return (_allowMultipleExecutions, IsExecuting) switch
+            {
+                (true, _) => CanExecuteInternal(),
+                (false, true) => false,
+                (false, false) => CanExecuteInternal()
+            };
+            //  return true;
+        }
+
+        private bool CanExecuteInternal()
         {
             if (_canExecute != null && _target.TryGetTarget(out var vm))
             {
@@ -103,7 +137,7 @@ namespace Xam.HelpTools
                 if (_subscribed == false)
                 {
                     //propertyDescriptor.AddValueChanged(vm, OnCanExecuteChanged);
-                    ((INotifyPropertyChanged)vm).PropertyChanged+= OnPropertyChanged;
+                    ((INotifyPropertyChanged)vm).PropertyChanged += OnPropertyChanged;
                     _subscribed = true;
                 }
 
@@ -191,7 +225,7 @@ namespace Xam.HelpTools
             }
             catch (Exception ex)
             {
-                
+                _onException?.Invoke(ex);
             }
             finally
             {
@@ -206,7 +240,7 @@ namespace Xam.HelpTools
             //AsyncContext.Run(() => ExecuteAsync((TParameterType)parameter));
             //   var tsk = Task.Run(() => ExecuteAsync((TParameterType)parameter));
             //  tsk.WaitAndUnwrapException();
-            ExecuteAsync((TParameterType)parameter).RunAsync(_continueOnTheSameContext, null);
+            ExecuteAsync((TParameterType)parameter).RunAsync(_continueOnTheSameContext, _onException);
 
         }
 

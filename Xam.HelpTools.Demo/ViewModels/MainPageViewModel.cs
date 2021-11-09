@@ -19,7 +19,7 @@ namespace Xam.HelpTools.Demo.ViewModels
 
         private AsyncCommandEx<object, MainPageViewModel> _pressbuttonCommand;
         public AsyncCommandEx<object, MainPageViewModel> PressButtonCommand => _pressbuttonCommand ?? (_pressbuttonCommand = 
-            new AsyncCommandEx<object, MainPageViewModel>(PressButtonCommandExecute,_canPressExpression,new WeakReference<MainPageViewModel>(this)));
+            new AsyncCommandEx<object, MainPageViewModel>(PressButtonCommandExecute,_canPressExpression,new WeakReference<MainPageViewModel>(this),allowMultipleExecutions:false));
 
         private Expression<Func<MainPageViewModel, bool>> _canPressExpression => x => x.CanPress;
 
@@ -51,6 +51,7 @@ namespace Xam.HelpTools.Demo.ViewModels
 
         private async Task PressButtonCommandExecute(object t)
         {
+            await Task.Delay(2500);
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await _pageDialogService.DisplayAlertAsync("Hello", "Button pressed", "Ok");
