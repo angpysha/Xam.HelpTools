@@ -1,21 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-	  <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
 
+	<PropertyGroup>
+		<NeutralLanguage>en</NeutralLanguage>
+		<PackageId>Xam.HelpTools</PackageId>
+		<Authors>Andrii Petrovskyi</Authors>
+		<PackageProjectUrl>https://github.com/angpysha/Xam.HelpTools</PackageProjectUrl>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
+		<IncludeSymbols>True</IncludeSymbols>
+		<IncludeSource>True</IncludeSource>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/angpysha/Xam.HelpTools</RepositoryUrl>
+		<PrismLicenseFile>$(MSBuildThisFileDirectory)LICENSE</PrismLicenseFile>
+		<PackageTags>xamarin;xf;asynccommand</PackageTags>
+		<Copyright>Copyright Andrii Petrvoskyi 2021</Copyright>
+		<Description>Help tools for Xamarin Forms projects</Description>
+		<GenerateLibraryLayout>true</GenerateLibraryLayout>
+		<DisableEmbeddedXbf>false</DisableEmbeddedXbf>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReleaseNotes>AsyncCommandEx implementation</PackageReleaseNotes>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
+			<Version>3.4.244</Version>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="LICENSE" Pack="true" PackagePath="" />
 	</ItemGroup>
 	<ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
-  </ItemGroup>
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+	</ItemGroup>
 
 </Project>
