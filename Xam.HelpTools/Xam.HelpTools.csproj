@@ -6,23 +6,22 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<NeutralLanguage>en</NeutralLanguage>
-		<PackageId>Xam.HelpTools</PackageId>
+		<PackageId>Angpysha.Plugin.XamarinHelpTools</PackageId>
+		<AssemblyName>Plugin.XamarinHelpTools</AssemblyName>
 		<Authors>Andrii Petrovskyi</Authors>
+		<Title>Angpysha.Plugin.XamarinHelpTools</Title>
 		<PackageProjectUrl>https://github.com/angpysha/Xam.HelpTools</PackageProjectUrl>
-		<!--<PackageLicenseFile>LICENSE</PackageLicenseFile>-->
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageOutputPath>$(MSBuildThisFileDirectory)Artifacts</PackageOutputPath>
 		<IncludeSymbols>True</IncludeSymbols>
 		<IncludeSource>True</IncludeSource>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/angpysha/Xam.HelpTools</RepositoryUrl>
-		<PrismLicenseFile>$(MSBuildThisFileDirectory)LICENSE</PrismLicenseFile>
 		<PackageTags>xamarin;xf;asynccommand</PackageTags>
-		<Copyright>Copyright Andrii Petrvoskyi 2021</Copyright>
+		<Copyright>Copyright Andrii Petrovskyi 2021</Copyright>
 		<Description>Help tools for Xamarin Forms projects</Description>
-		<GenerateLibraryLayout>true</GenerateLibraryLayout>
-		<DisableEmbeddedXbf>false</DisableEmbeddedXbf>
+		<!--<GenerateLibraryLayout>true</GenerateLibraryLayout>-->
+		<!--<DisableEmbeddedXbf>false</DisableEmbeddedXbf>-->
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReleaseNotes>AsyncCommandEx implementation</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
