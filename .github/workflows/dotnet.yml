@@ -22,7 +22,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet pack ./Xam.HelpTools.Demo/Xam.HelpTools.Demo.csproj
+      run: dotnet build ./Xam.HelpTools.Demo/Xam.HelpTools.Demo.csproj -c Release
     - name: Push_Nugets
       run: dotnet nuget push ./Xam.HelpTools.Demo/Artifacts/*nupkg --api-key oy2ntp7rbxlpazclos4ap5kqpirulniulbwjmw233n2p34 --source https://api.nuget.org/v3/index.json
 #     - name: Test
