@@ -23,7 +23,13 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet pack ./Xam.HelpTools/Xam.HelpTools.csproj -c Release
-    - name: Push_Nugets
-      run: dotnet nuget push ./Xam.HelpTools/Artifacts/*nupkg --api-key ${{ secrets.API_NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        name: packages
+        path: ./**/Artifacts/*nupkg
+#     - name: Push_Nugets
+#       run: dotnet nuget push ./Xam.HelpTools/Artifacts/*nupkg --api-key ${{ secrets.API_NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+    #- name: Publish_artifcats
 #     - name: Test
 #       run: dotnet test --no-build --verbosity normal
