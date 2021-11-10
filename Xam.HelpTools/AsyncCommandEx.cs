@@ -60,7 +60,7 @@ namespace Xam.HelpTools
         private readonly Func<TParameterType, Task> execute;
 
 
-        private int _executionCount;
+        private volatile int _executionCount;
 
         protected int ExecutionCount
         {
