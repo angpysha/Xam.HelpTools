@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Services;
+using Xam.HelpTools.Commands;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -18,8 +19,8 @@ namespace Xam.HelpTools.Demo.ViewModels
         private readonly IPageDialogService _pageDialogService;
 
         private AsyncCommandEx<object, MainPageViewModel> _pressbuttonCommand;
-        public AsyncCommandEx<object, MainPageViewModel> PressButtonCommand => _pressbuttonCommand ?? (_pressbuttonCommand = 
-            new AsyncCommandEx<object, MainPageViewModel>(PressButtonCommandExecute,_canPressExpression,new WeakReference<MainPageViewModel>(this),allowMultipleExecutions:false));
+        public AsyncCommandEx<object, MainPageViewModel> PressButtonCommand => _pressbuttonCommand ?? (_pressbuttonCommand =
+            new AsyncCommandEx<object, MainPageViewModel>(PressButtonCommandExecute, _canPressExpression, new WeakReference<MainPageViewModel>(this), allowMultipleExecutions: false));
 
         private Expression<Func<MainPageViewModel, bool>> _canPressExpression => x => x.CanPress;
 
@@ -28,10 +29,7 @@ namespace Xam.HelpTools.Demo.ViewModels
         public bool CanPress
         {
             get => _canPress;
-            set
-            {
-                SetProperty(ref _canPress, value);
-            }
+            set => SetProperty(ref _canPress, value);
         }
 
         private Command _buttonCOmmand2;

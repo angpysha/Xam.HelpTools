@@ -18,5 +18,17 @@ namespace Xam.HelpTools.Helpers
                 OnException?.Invoke(e);
             }
         }
+
+        public static async void RunAsync(this ValueTask vt, bool continueOnTheSameContext, Action<Exception> onException)
+        {
+            try
+            {
+                await vt.ConfigureAwait(continueOnTheSameContext);
+            }
+            catch (Exception e)
+            {
+                onException?.Invoke(e);
+            }
+        }
     }
 }
