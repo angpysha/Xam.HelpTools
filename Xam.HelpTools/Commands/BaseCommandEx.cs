@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Xam.HelpTools.Commands
@@ -43,7 +44,20 @@ namespace Xam.HelpTools.Commands
                 _executionCount = value;
 
                 if (shouldRaiseCanExecuteChanged)
-                    _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged));
+                    RaiseCanExecuteChanged();
+            }
+        }
+
+
+        public void RaiseCanExecuteChanged()
+        {
+            if (MainThread.IsMainThread)
+            {
+                _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged));
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(() => _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged)));
             }
         }
 
@@ -51,7 +65,7 @@ namespace Xam.HelpTools.Commands
         public bool IsExecuting => ExecutionCount > 0;
 
 
-        public bool CanExecute(object parameter)
+        public virtual bool CanExecute(object parameter)
         {
             return (_allowMultipleExecutions, IsExecuting) switch
             {
@@ -88,7 +102,8 @@ namespace Xam.HelpTools.Commands
 
         protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged));
+           // _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged))
+           RaiseCanExecuteChanged();
         }
 
         protected void GetGetMethod(PropertyInfo propertyInfo)

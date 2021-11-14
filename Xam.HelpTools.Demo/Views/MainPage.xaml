@@ -7,12 +7,19 @@
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <Label Text="Welcome to Xamarin Forms and Prism!" />
 
-        <Button Text="Test1"
+        <Button Text="Test AsyncCommandEx"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding PressButtonCommand}"/>
 
+        <Button Text="Test AsyncValueCommandEx"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding PressButtonValueCommand}"/>
 
-        <Button Text="Test2"
+        <Button Text="Test CommandEx"
+                HorizontalOptions="FillAndExpand"
+                Command="{Binding ButtonPressend2Command}"/>
+
+        <Button Text="Change canExecute"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding ButtonCOmmand2}"/>
     </StackLayout>
