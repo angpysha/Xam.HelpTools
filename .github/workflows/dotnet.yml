@@ -21,8 +21,10 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet pack ./Xam.HelpTools/Xam.HelpTools.csproj -c Release
+#     - name: Build
+#       run: dotnet pack ./Xam.HelpTools/Xam.HelpTools.csproj -c Release
+    - name: Build package
+      run: msbuild ./Xam.HelpTools/Xam.HelpTools.csproj -t:pack /property:Configuration=Release
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
