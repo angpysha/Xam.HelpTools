@@ -13,7 +13,9 @@ using Xam.HelpTools.Effects;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using Xam.HelpTools.Effects.BrushedtextColor;
+using Xam.HelpTools.Platform.Android.Helpers;
 
+[assembly: ResolutionGroupName("Angpysha")]
 [assembly: ExportEffect(typeof(BrushedTextColorPlatformEffect), "BrushedText")]
 
 namespace Xam.HelpTools.Effects.BrushedtextColor
@@ -140,22 +142,22 @@ namespace Xam.HelpTools.Effects.BrushedtextColor
                 return radialGradientLayer;
             }
 
-            //if (brush is ImageBrush imageBrush)
-            //{
-            //    var image = await imageBrush.Source.ToUIImage();
-            //    var layer = new CALayer()
-            //    {
-            //        Name = BackgroundLayer,
-            //        Frame = bounds
-            //    };
-            //    if (image != null)
-            //    {
-            //        //    var newImage = ResizeImage(image, size);
-            //        layer.Contents = image.CGImage;
-            //    }
+            if (brush is ImageBrush imageBrush)
+            {
+                var image = await imageBrush.Source.ToUIImage();
+                var layer = new CALayer()
+                {
+                    Name = BackgroundLayer,
+                    Frame = bounds
+                };
+                if (image != null)
+                {
+                    //    var newImage = ResizeImage(image, size);
+                    layer.Contents = image.CGImage;
+                }
 
-            //    return layer;
-            //}
+                return layer;
+            }
 
             return null;
         }
