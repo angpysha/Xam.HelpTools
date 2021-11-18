@@ -21,6 +21,7 @@ namespace Xam.HelpTools.Demo.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Xam.HelpTools.Platform.iOS.Initializer.Initialize();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
 

@@ -75,6 +75,8 @@
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\font\mukta.ttf" />
+    <AndroidResource Include="Resources\font\conforter_brush.ttf" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
@@ -111,6 +113,13 @@
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>Xam.HelpTools.Demo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xam.HelpTools\Xam.HelpTools.csproj">
+      <Project>{1bcd1010-a95c-4719-b8c9-e149193e537c}</Project>
+      <Name>Xam.HelpTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ssss.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

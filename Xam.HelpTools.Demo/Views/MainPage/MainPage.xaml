@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xam.HelpTools.Demo.Views.MainPage"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+           
+             xmlns:local="clr-namespace:Xam.HelpTools.Demo.ViewModels"
+             Title="{Binding Title}">
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Label Text="Welcome to Xam.HelpTools Demo!" />
+        <Button Text="Commands page"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static local:EPageType.Commands}"
+                />
+        <Button Text="Fonts page (Android)"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static local:EPageType.AndroidText}"
+                />
+        <Button Text="Brushed text page"
+                Command="{Binding NavigateCommand}"
+                CommandParameter="{x:Static local:EPageType.Brushes}"
+                />
+
+        <!--<Label Text="This is should be Mukta font"
+               FontFamily="mukta"
+               xamhelpandroid:TextOptions.UseFontResources="True"
+               FontSize="24"/>
+        <Label Text="This is should be conforter_brush font"
+               FontFamily="conforter_brush"
+               xamhelpandroid:TextOptions.UseFontResources="True"
+               FontSize="24"/>
+        <Label Text="This is should be missing font"
+               FontFamily="missing"
+               xamhelpandroid:TextOptions.UseFontResources="True"
+               FontSize="24"/>
+
+        <Entry FontFamily="conforter_brush"
+               Text="Test"
+               FontSize="18"
+               xamhelpandroid:TextOptions.UseFontResources="True"/>-->
+
+    </StackLayout>
+
+</ContentPage>

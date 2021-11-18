@@ -9,23 +9,17 @@ using Xam.HelpTools.Helpers;
 
 namespace Xam.HelpTools.Commands
 {
-    public class AsyncValueCommandEx<TViewModelType> : AsyncCommandEx<object, TViewModelType> where TViewModelType:class
+    public class AsyncValueCommandEx<TParameterType> : AsyncCommandEx<TParameterType, object>
     {
         public AsyncValueCommandEx(Func<Task> action, bool continueOnTheSameContext) : base(action, continueOnTheSameContext)
         {
         }
 
-        public AsyncValueCommandEx(Func<object, Task> action, bool continueOnTheSameContext) : base(action, continueOnTheSameContext)
+        public AsyncValueCommandEx(Func<TParameterType, Task> action, bool continueOnTheSameContext) : base(action, continueOnTheSameContext)
         {
         }
 
-        public AsyncValueCommandEx(Func<object, Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression, WeakReference<TViewModelType> target, Action<Exception> onException = null, bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action, canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
-        {
-        }
-
-        public AsyncValueCommandEx(Func<Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression, WeakReference<TViewModelType> target, Action<Exception> onException = null, bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action, canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
-        {
-        }
+      
     }
     public class AsyncValueCommandEx<TParameterType, TViewModelType> : BaseCommandEx<TParameterType, TViewModelType>, ICommand where TViewModelType: class
     {

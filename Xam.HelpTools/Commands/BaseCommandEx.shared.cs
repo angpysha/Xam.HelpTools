@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -21,8 +22,12 @@ namespace Xam.HelpTools.Commands
         protected bool _subscribed;
         protected bool _continueOnTheSameContext = true;
         protected Func<TViewModelType, bool> _getValueFunc;
+        protected Action<TViewModelType, bool> _setValueFunc;
         protected bool _allowMultipleExecutions;
         protected Action<Exception> _onException;
+        private SynchronizationContext _syncContext;
+
+        private bool? _canExecuteOld;
 
 
 
@@ -63,16 +68,29 @@ namespace Xam.HelpTools.Commands
 
 
         public bool IsExecuting => ExecutionCount > 0;
-
+        private bool _handleCanExecuteChanged = true;
 
         public virtual bool CanExecute(object parameter)
         {
             return (_allowMultipleExecutions, IsExecuting) switch
             {
                 (true, _) => CanExecuteInternal(),
-                (false, true) => false,
+                (false, true) => DisableCanExecute(),
                 (false, false) => CanExecuteInternal()
             };
+        }
+
+        private bool DisableCanExecute()
+        {
+            _handleCanExecuteChanged = false;
+
+            if (_target !=null && _target.TryGetTarget(out var itm))
+            {
+                _canExecuteOld = _getValueFunc(itm);
+                _setValueFunc(itm, false);
+            }
+
+            return false;
         }
 
         protected bool CanExecuteInternal()
@@ -93,6 +111,18 @@ namespace Xam.HelpTools.Commands
                     GetGetMethod(propertyInfo);
                 }
 
+                if (_setValueFunc == null)
+                {
+                    GetSetMethod(propertyInfo);
+                }
+
+                if (_canExecuteOld != null)
+                {
+                    _handleCanExecuteChanged = false;
+                    _setValueFunc(vm, _canExecuteOld.Value);
+                    _canExecuteOld = null;
+                }
+
                 _expressionValue = (bool)_getValueFunc(vm);
                 return _expressionValue;
             }
@@ -103,7 +133,17 @@ namespace Xam.HelpTools.Commands
         protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
            // _weakEventManager.HandleEvent(this, EventArgs.Empty, nameof(CanExecuteChanged))
-           RaiseCanExecuteChanged();
+           //if (e.PropertyName == )
+           var propertyInfo = GetCanExecutePropertyInfo();
+           if (e.PropertyName == propertyInfo.Name)
+           {
+               if (_handleCanExecuteChanged == false)
+               {
+                   _handleCanExecuteChanged = true;
+                   return;
+               }
+               RaiseCanExecuteChanged();
+           }
         }
 
         protected void GetGetMethod(PropertyInfo propertyInfo)
@@ -122,6 +162,26 @@ namespace Xam.HelpTools.Commands
 
                 var compiled = getterExpression.Compile();
                 _getValueFunc = compiled;
+            }
+        }
+
+        protected void GetSetMethod(PropertyInfo propertyInfo)
+        {
+            var tp = typeof(TViewModelType);
+            var props = tp.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var propInfoEx = props.FirstOrDefault(x => x.Name == propertyInfo.Name);
+            if (propInfoEx != null)
+            {
+                var setMethod = propInfoEx.GetSetMethod();
+                var instanceParameter = Expression.Parameter(tp, "ins");
+                var paramParameter = Expression.Parameter(typeof(bool), "val");
+
+                var setterExpression = Expression.Lambda<Action<TViewModelType, bool>>(
+                    Expression.Call(instanceParameter, setMethod, paramParameter), instanceParameter, paramParameter);
+
+                var compiled = setterExpression.Compile();
+                _setValueFunc = compiled;
+
             }
         }
 

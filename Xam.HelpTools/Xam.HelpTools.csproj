@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.38">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;netstandard2.1;monoandroid11.0;xamarinios10</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;monoandroid11.0;Xamarin.iOS10;monoandroid10.0</TargetFrameworks>
 		<LangVersion>9.0</LangVersion>
 	</PropertyGroup>
 
@@ -25,9 +25,10 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReleaseNotes>AsyncCommandEx implementation</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
@@ -49,4 +50,42 @@
 		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Compile Include="**\*.shared.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+		<Compile Include="**\*.uwp.cs" />
+		<!--
+    If you need to add sdk references:
+     <SDKReference Include="WindowsMobile, Version=10.0.16299.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+    -->
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+		<Compile Include="**\*.android.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+		<Compile Include="**\*.apple.cs" />
+		<Compile Include="**\*.ios.cs" />
+		<Compile Include="**\*.apple.designer.cs" />
+		<InterfaceDefinition Include="**\*.apple.xib" />
+		<BundleResource Include="**\*.plist" />
+	</ItemGroup>
+
+
+
+	<!--<ItemGroup>
+	  <None Remove="Platform\Android\AndroidTextOptionsEffect.android.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="Platform\Android\AndroidTextOptionsEffect.android.cs" />
+	</ItemGroup>-->
 </Project>

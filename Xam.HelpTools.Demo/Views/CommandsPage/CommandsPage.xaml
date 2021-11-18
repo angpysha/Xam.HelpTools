@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Xam.HelpTools.Demo.Views.MainPage"
-             Title="{Binding Title}">
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Xam.HelpTools.Demo.Views.CommandsPage.CommandsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Test commands" 
+                   HorizontalOptions="CenterAndExpand"/>
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-
-        <Button Text="Test AsyncCommandEx"
+            <Button Text="Test AsyncCommandEx"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding PressButtonCommand}"/>
 
-        <Button Text="Test AsyncValueCommandEx"
+            <Button Text="Test AsyncValueCommandEx"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding PressButtonValueCommand}"/>
 
-        <Button Text="Test CommandEx"
+            <Button Text="Test CommandEx"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding ButtonPressend2Command}"/>
 
-        <Button Text="Change canExecute"
+            <Button Text="Change canExecute"
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding ButtonCOmmand2}"/>
-    </StackLayout>
 
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

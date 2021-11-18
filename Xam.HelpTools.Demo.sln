@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xam.HelpTools.Demo", "Xam.HelpTools.Demo\Xam.HelpTools.Demo.csproj", "{FD5952CF-B242-42E5-B922-2075CBDFB288}"
 EndProject
@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Xam.HelpTools\version.json = Xam.HelpTools\version.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xam.HelpTools.UnitTests", "Xam.HelpTools.UnitTests\Xam.HelpTools.UnitTests.csproj", "{3F86CAED-21A9-454B-93A0-D1FDB7663EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xam.HelpTools.UnitTests", "Xam.HelpTools.UnitTests\Xam.HelpTools.UnitTests.csproj", "{3F86CAED-21A9-454B-93A0-D1FDB7663EA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -191,6 +191,7 @@ Global
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|ARM.ActiveCfg = Debug|iPhoneSimulator
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|iPhone.Build.0 = Debug|iPhone
+		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|iPhone.Deploy.0 = Debug|iPhone
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{52A74BB7-52A3-40CD-9E83-BE699F44FA9D}.Debug|x64.ActiveCfg = Debug|iPhoneSimulator

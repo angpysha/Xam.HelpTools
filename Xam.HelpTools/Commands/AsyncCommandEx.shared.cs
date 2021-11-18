@@ -15,8 +15,7 @@ using Xamarin.Forms.Internals;
 
 namespace Xam.HelpTools.Commands
 {
-
-    public class AsyncCommandEx<TViewModelType> : AsyncCommandEx<object, TViewModelType>, ICommand where TViewModelType : class
+    public class AsyncCommandEx : AsyncCommandEx<object, object>
     {
         public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
@@ -25,23 +24,16 @@ namespace Xam.HelpTools.Commands
         public AsyncCommandEx(Func<object, Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
         }
+    }
 
-        public AsyncCommandEx(Func<object, Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression,
-            WeakReference<TViewModelType> target,
-            Action<Exception> onException = null,
-            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action,
-            canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
+    public class AsyncCommandEx<TParameterType> : AsyncCommandEx<TParameterType, object>, ICommand 
+    {
+        public AsyncCommandEx(Func<Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
-
         }
 
-        public AsyncCommandEx(Func<Task> action, Expression<Func<TViewModelType, bool>> canExecuteExpression,
-            WeakReference<TViewModelType> target,
-            Action<Exception> onException = null,
-            bool continueInTheSameContext = true, bool allowMultipleExecutions = true) : base(action,
-            canExecuteExpression, target, onException, continueInTheSameContext, allowMultipleExecutions)
+        public AsyncCommandEx(Func<TParameterType, Task> action, bool continueOnTheSameContext = true) : base(action, continueOnTheSameContext)
         {
-
         }
     }
 

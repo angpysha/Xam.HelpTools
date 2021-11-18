@@ -16,7 +16,7 @@ namespace Xam.HelpTools.Demo.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-
+            Xam.HelpTools.Platform.Android.Initializer.Initialize();
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
