@@ -23,6 +23,8 @@ jobs:
       run: dotnet restore
 #     - name: Build
 #       run: dotnet pack ./Xam.HelpTools/Xam.HelpTools.csproj -c Release
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
     - name: Build package
       run: msbuild ./Xam.HelpTools/Xam.HelpTools.csproj -t:pack /property:Configuration=Release
     - name: Upload a Build Artifact
