@@ -38,18 +38,18 @@ namespace Xam.HelpTools.Demo.Views.CommandsPage
         public AsyncValueCommandEx<object, CommandsViewModel> PressButtonValueCommand => _pressbuttonValueCommand ?? (_pressbuttonValueCommand =
             new AsyncValueCommandEx<object, CommandsViewModel>(PressButtonValueCommandExecute, _canPressExpression, new WeakReference<CommandsViewModel>(this), allowMultipleExecutions: false));
 
-        private CommandEx<object, CommandsViewModel> _buttonPressend2Command;
-
-        public CommandEx<object, CommandsViewModel> ButtonPressend2Command => _buttonPressend2Command ??
-                                                                              (_buttonPressend2Command =
-                                                                                  new CommandEx<object,
-                                                                                     CommandsViewModel>(
-                                                                                      buttonPressend2CommandExecute,
-                                                                                      _canPressExpression,
-                                                                                      new WeakReference<
-                                                                                         CommandsViewModel>(this)
-                                                                                      ));
-
+        // private CommandEx<object, CommandsViewModel> _buttonPressend2Command;
+        //
+        // public CommandEx<object, CommandsViewModel> ButtonPressend2Command => _buttonPressend2Command ??
+        //                                                                       (_buttonPressend2Command =
+        //                                                                           new CommandEx<object,
+        //                                                                              CommandsViewModel>(
+        //                                                                               buttonPressend2CommandExecute,
+        //                                                                               _canPressExpression,
+        //                                                                               new WeakReference<
+        //                                                                                  CommandsViewModel>(this)
+        //                                                                               ));
+        //
 
 
         private void ButtonCOmmand2Execute()

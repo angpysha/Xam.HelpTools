@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Xam.HelpTools.Commands
 {
-    public class CommandEx<TViewModelType> : CommandEx<object, TViewModelType> where TViewModelType : class
+    class CommandEx<TViewModelType> : CommandEx<object, TViewModelType> where TViewModelType : class
     {
         public CommandEx(Action action) : base(action)
         {
@@ -28,7 +28,7 @@ namespace Xam.HelpTools.Commands
         }
     }
 
-    public class CommandEx<TParameterType, TViewModelType> : BaseCommandEx<TParameterType, TViewModelType>, ICommand where TViewModelType:class 
+    class CommandEx<TParameterType, TViewModelType> : BaseCommandEx<TParameterType, TViewModelType>, ICommand where TViewModelType:class 
     {
         protected Action<TParameterType> execute;
         public CommandEx(Action action) : this((d) => action())

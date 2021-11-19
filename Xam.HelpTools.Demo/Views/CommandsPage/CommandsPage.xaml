@@ -17,9 +17,9 @@
                 HorizontalOptions="FillAndExpand"
                 Command="{Binding PressButtonValueCommand}"/>
 
-            <Button Text="Test CommandEx"
-                HorizontalOptions="FillAndExpand"
-                Command="{Binding ButtonPressend2Command}"/>
+            <!-- <Button Text="Test CommandEx" -->
+            <!--     HorizontalOptions="FillAndExpand" -->
+            <!--     Command="{Binding ButtonPressend2Command}"/> -->
 
             <Button Text="Change canExecute"
                 HorizontalOptions="FillAndExpand"
