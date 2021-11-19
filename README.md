@@ -1,8 +1,7 @@
 # Angpysha.Plugin.XamarinHelpTools
 *Help tools for Xamarin Forms*
 
-<img src="images/fonts.png" height="350"/>
-<img src="images/brushedtext.png" height="350"/>
+<img src="images/fonts.png" height="350"/><img src="images/brushedtext.png" height="350"/>
 
 [![](https://img.shields.io/nuget/v/Angpysha.Plugin.XamarinHelpTools)](https://www.nuget.org/packages/Angpysha.Plugin.XamarinHelpTools) ![example workflow](https://github.com/angpysha/Xam.HelpTools/actions/workflows/dotnet.yml/badge.svg)
 
